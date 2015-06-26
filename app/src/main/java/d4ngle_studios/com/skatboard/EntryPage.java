@@ -18,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * This is the Entry Page
+ */
 public class EntryPage extends ActionBarActivity {
 
     /**
