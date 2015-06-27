@@ -69,31 +69,39 @@
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks1"
-                    android:text="1" />
+                    android:textOn="1"
+                    android:textOff="1"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks2"
-                    android:text="2" />
+                    android:textOn="2"
+                    android:textOff="2"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks3"
-                    android:text="3" />
+                    android:textOn="3"
+                    android:textOff="3"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks4"
-                    android:text="4" />
+                    android:textOn="4"
+                    android:textOff="4"
+                    />
             </LinearLayout>
 
         </LinearLayout>
@@ -105,31 +113,39 @@
             android:background="#3f51b5">
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsDiamonds"
-                    android:text="@string/icon_diamonds" />
+                    android:textOn="@string/icon_diamonds"
+                    android:textOff="@string/icon_diamonds"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsHearts"
-                    android:text="@string/icon_hearts" />
+                    android:textOn="@string/icon_hearts"
+                    android:textOff="@string/icon_hearts"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsSpades"
-                    android:text="@string/icon_spades" />
+                    android:textOn="@string/icon_spades"
+                    android:textOff="@string/icon_spades"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <Button
+                <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsClubs"
-                    android:text="@string/icon_clubs" />
+                    android:textOn="@string/icon_clubs"
+                    android:textOff="@string/icon_clubs"
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >

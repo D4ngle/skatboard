@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 /**
  * This is the Entry Page
@@ -163,15 +163,15 @@ public class EntryPage extends ActionBarActivity {
             Button buttonPlayer3 = (Button)rootView.findViewById(R.id.imageButtonPlayer3 );
             Button buttonPlayer4 = (Button)rootView.findViewById(R.id.imageButtonPlayer4 );
 
-            Button buttonNumberJacks1 = (Button)rootView.findViewById(R.id.numberJacks1 );
-            Button buttonNumberJacks2 = (Button)rootView.findViewById(R.id.numberJacks2 );
-            Button buttonNumberJacks3 = (Button)rootView.findViewById(R.id.numberJacks3 );
-            Button buttonNumberJacks4 = (Button)rootView.findViewById(R.id.numberJacks4 );
+            ToggleButton buttonNumberJacks1 = (ToggleButton)rootView.findViewById(R.id.numberJacks1 );
+            ToggleButton buttonNumberJacks2 = (ToggleButton)rootView.findViewById(R.id.numberJacks2 );
+            ToggleButton buttonNumberJacks3 = (ToggleButton)rootView.findViewById(R.id.numberJacks3 );
+            ToggleButton buttonNumberJacks4 = (ToggleButton)rootView.findViewById(R.id.numberJacks4 );
 
-            Button buttonValueSuitsDiamonds = (Button)rootView.findViewById(R.id.valueSuitsDiamonds);
-            Button buttonValueSuitsHearts = (Button)rootView.findViewById(R.id.valueSuitsHearts);
-            Button buttonValueSuitsSpades = (Button)rootView.findViewById(R.id.valueSuitsSpades);
-            Button buttonValueSuitsClubs = (Button)rootView.findViewById(R.id.valueSuitsClubs );
+            ToggleButton buttonValueSuitsDiamonds = (ToggleButton)rootView.findViewById(R.id.valueSuitsDiamonds);
+            ToggleButton buttonValueSuitsHearts = (ToggleButton)rootView.findViewById(R.id.valueSuitsHearts);
+            ToggleButton buttonValueSuitsSpades = (ToggleButton)rootView.findViewById(R.id.valueSuitsSpades);
+            ToggleButton buttonValueSuitsClubs = (ToggleButton)rootView.findViewById(R.id.valueSuitsClubs );
 
             ImageButton buttonValueSuitsGrand = (ImageButton)rootView.findViewById(R.id.valueGrand );
 
@@ -231,10 +231,7 @@ public class EntryPage extends ActionBarActivity {
     }
 
     private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {
-        Rect scrollBounds = new Rect();
-        playersLayout.getHitRect(scrollBounds);
-
-        return view.getLocalVisibleRect(scrollBounds);
+        return true;
     }
 
     private static void changePlayerIcons(Button clickedButton, List<Button> allButtons, String winString) {
