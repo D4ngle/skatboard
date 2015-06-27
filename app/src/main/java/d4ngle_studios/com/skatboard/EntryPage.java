@@ -1,6 +1,5 @@
 package d4ngle_studios.com.skatboard;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -8,14 +7,11 @@ import java.util.Locale;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 /**
@@ -49,8 +47,13 @@ public class EntryPage extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry_page);
 
+        /**
+         * catch unexpected error
+         */
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+
+        setContentView(R.layout.activity_entry_page);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -151,9 +154,19 @@ public class EntryPage extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
+
+            Button buttonPlayer1 = (Button)rootView.findViewById(R.id.imageButtonPlayer1 );
+            Button buttonPlayer2 = (Button)rootView.findViewById(R.id.imageButtonPlayer2 );
+            Button buttonPlayer3 = (Button)rootView.findViewById(R.id.imageButtonPlayer3 );
+            Button buttonPlayer4 = (Button)rootView.findViewById(R.id.imageButtonPlayer4 );
+
+            Button buttonNumberJacks1 = (Button)rootView.findViewById(R.id.numberJacks1 );
+            Button buttonNumberJacks2 = (Button)rootView.findViewById(R.id.numberJacks2 );
+            Button buttonNumberJacks3 = (Button)rootView.findViewById(R.id.numberJacks3 );
+            Button buttonNumberJacks4 = (Button)rootView.findViewById(R.id.numberJacks4 );
 
             Button buttonValueSuitsDiamonds = (Button)rootView.findViewById(R.id.valueSuitsDiamonds);
             Button buttonValueSuitsHearts = (Button)rootView.findViewById(R.id.valueSuitsHearts);
@@ -162,20 +175,43 @@ public class EntryPage extends ActionBarActivity {
 
             ImageButton buttonValueSuitsGrand = (ImageButton)rootView.findViewById(R.id.valueGrand );
 
-            Button buttonPlayer1 = (Button)rootView.findViewById(R.id.imageButtonPlayer1 );
-            Button buttonPlayer2 = (Button)rootView.findViewById(R.id.imageButtonPlayer2 );
-            Button buttonPlayer3 = (Button)rootView.findViewById(R.id.imageButtonPlayer3 );
-            Button buttonPlayer4 = (Button)rootView.findViewById(R.id.imageButtonPlayer4 );
+            final TextView toggleAdditionalInfoMore = (TextView)rootView.findViewById(R.id.additional_info_more);
+            final TextView toggleAdditionalInfoLess = (TextView)rootView.findViewById(R.id.additional_info_less);
+            final ScrollView additionalGameInfo = (ScrollView)rootView.findViewById(R.id.additionalGameInfoView);
+            additionalGameInfo.setVisibility(View.GONE);
+
+            buttonPlayer1.setTypeface(font);
+            buttonPlayer2.setTypeface(font);
+            buttonPlayer3.setTypeface(font);
+            buttonPlayer4.setTypeface(font);
+
+            buttonNumberJacks1.setTypeface(font);
+            buttonNumberJacks2.setTypeface(font);
+            buttonNumberJacks3.setTypeface(font);
+            buttonNumberJacks4.setTypeface(font);
 
             buttonValueSuitsDiamonds.setTypeface(font);
             buttonValueSuitsHearts.setTypeface(font);
             buttonValueSuitsSpades.setTypeface(font);
             buttonValueSuitsClubs.setTypeface(font);
 
-            buttonPlayer1.setTypeface(font);
-            buttonPlayer2.setTypeface(font);
-            buttonPlayer3.setTypeface(font);
-            buttonPlayer4.setTypeface(font);
+            toggleAdditionalInfoMore.setTypeface(font);
+            toggleAdditionalInfoMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    additionalGameInfo.setVisibility(View.VISIBLE);
+                    toggleAdditionalInfoMore.setVisibility(View.GONE);
+                }
+            });
+
+            toggleAdditionalInfoLess.setTypeface(font);
+            toggleAdditionalInfoLess.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    additionalGameInfo.setVisibility(View.GONE);
+                    toggleAdditionalInfoMore.setVisibility(View.VISIBLE);
+                }
+            });
 
             addPlayerOnClickListeners(Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4));
 
@@ -192,24 +228,6 @@ public class EntryPage extends ActionBarActivity {
                 });
             }
         }
-    }
-
-    private static ArrayList<View> getViewsByTag(ViewGroup root, String tag){
-        ArrayList<View> views = new ArrayList<View>();
-        final int childCount = root.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View child = root.getChildAt(i);
-            if (child instanceof ViewGroup) {
-                views.addAll(getViewsByTag((ViewGroup) child, tag));
-            }
-
-            final Object tagObj = child.getTag();
-            if (tagObj != null && tagObj.equals(tag)) {
-                views.add(child);
-            }
-
-        }
-        return views;
     }
 
     private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {

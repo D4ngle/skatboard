@@ -1,84 +1,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".EntryPage$PlaceholderFragment">
+    android:layout_height="match_parent"
+    tools:context=".EntryPage$PlaceholderFragment"
+    android:background="#263238"
+    android:id="@+id/mainView">
 
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/horizontalScrollView" >
+        android:id="@+id/playersScrollView"
+        android:background="#f44336">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/playersLayout">
+            android:id="@+id/playersLayout" >
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButtonPlayer1"
-                    android:text="@string/icon_player"
-                    android:textSize="@dimen/abc_text_size_display_2_material"
-                    android:tag="btn_player" />
+                    style="@style/PlayerButton"
+                    android:id="@+id/imageButtonPlayer1" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButtonPlayer2"
-                    android:text="@string/icon_player"
-                    android:textSize="@dimen/abc_text_size_display_2_material"
-                    android:tag="btn_player" />
+                    style="@style/PlayerButton"
+                    android:id="@+id/imageButtonPlayer2" />
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButtonPlayer3"
-                    android:text="@string/icon_player"
-                    android:textSize="@dimen/abc_text_size_display_2_material"
-                    android:tag="btn_player" />
+                    style="@style/PlayerButton"
+                    android:id="@+id/imageButtonPlayer3" />
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButtonPlayer4"
-                    android:text="@string/icon_player"
-                    android:textSize="@dimen/abc_text_size_display_2_material"
-                    android:tag="btn_player" />
+                    style="@style/PlayerButton"
+                    android:id="@+id/imageButtonPlayer4" />
             </LinearLayout>
 
         </LinearLayout>
@@ -87,82 +46,53 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentEnd="false"
-        android:layout_below="@+id/horizontalScrollView">
+        android:id="@+id/basicGameInfoView"
+        android:layout_below="@+id/playersScrollView">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#607d8b">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="M/O"
-                android:id="@+id/textView"
-                android:layout_gravity="center" />
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
+                <ImageView
+                    style="@style/EqualButton"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
+                    android:id="@+id/numberJacks"
+                    android:src="@mipmap/ic_number_jacks" />
+            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/EqualButton"
                     android:id="@+id/numberJacks1"
-                    android:text="1"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="1" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/EqualButton"
                     android:id="@+id/numberJacks2"
-                    android:text="2"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="2" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/EqualButton"
                     android:id="@+id/numberJacks3"
-                    android:text="3"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="3" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center">
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/EqualButton"
                     android:id="@+id/numberJacks4"
-                    android:text="4"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="4" />
             </LinearLayout>
 
         </LinearLayout>
@@ -170,103 +100,193 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="#3f51b5">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center" >
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/EqualButton"
                     android:id="@+id/valueSuitsDiamonds"
-                    android:text="@string/icon_diamonds"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="@string/icon_diamonds" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center" >
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/EqualButton"
                     android:id="@+id/valueSuitsHearts"
-                    android:text="@string/icon_hearts"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="@string/icon_hearts" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center" >
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/EqualButton"
                     android:id="@+id/valueSuitsSpades"
-                    android:text="@string/icon_spades"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="@string/icon_spades" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center" >
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <Button
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/EqualButton"
                     android:id="@+id/valueSuitsClubs"
-                    android:text="@string/icon_clubs"
-                    android:textSize="@dimen/abc_text_size_headline_material" />
+                    android:text="@string/icon_clubs" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center" >
-
+            <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/EqualButton"
+                    android:scaleType="fitXY"
+                    android:layout_width="55sp"
+                    android:layout_height="55sp"
                     android:id="@+id/valueGrand"
                     android:src="@mipmap/ic_jacks" />
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/toggleAdditionalGameInfoView"
+        android:layout_below="@+id/basicGameInfoView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/additional_info_more"
+            android:id="@+id/additional_info_more"
+            style="@style/GameInfoToggle"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/additionalGameInfoView"
+        android:layout_below="@+id/basicGameInfoView"
+        android:layout_above="@+id/pointsLayout" >
+
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:rowCount="5"
+            android:columnCount="3">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText"
-                android:layout_gravity="left|bottom"
-                android:text="Anzahl Punkte" />
+            <TextView
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="@string/additional_info_less"
+                android:id="@+id/additional_info_less"
+                style="@style/GameInfoToggle"
+                />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
-                android:layout_gravity="bottom|end" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/text1"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:text="Angesagt"
+                android:layout_gravity="center"
+                />
 
+            <TextView
+                android:id="@+id/text1"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:text="Ergebnis"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="16dp"
+                />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="Hand"
+                style="@style/GameInfoText"
+                />
+
+            <CheckBox
+                android:layout_row="1"
+                android:layout_column="1"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/GameInfoText"
+                android:id="@+id/text1"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:text="Ouvert"
+                />
+
+            <CheckBox
+                android:layout_row="2"
+                android:layout_column="1"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/GameInfoText"
+                android:id="@+id/text1"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:text="Schneider"
+                />
+
+            <CheckBox
+                android:layout_row="3"
+                android:layout_column="1"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+            <CheckBox
+                android:layout_row="3"
+                android:layout_column="2"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/GameInfoText"
+                android:id="@+id/text1"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:text="Schwarz"
+                />
+
+            <CheckBox
+                android:layout_row="4"
+                android:layout_column="1"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+            <CheckBox
+                android:layout_row="4"
+                android:layout_column="2"
+                android:id="@+id/checkBox6"
+                android:layout_gravity="center"/>
+
+        </GridLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/pointsLayout">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextPoints"
+            android:text="Anzahl Punkte"
+            android:layout_gravity="start"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/buttonSave"
+            android:layout_gravity="end"/>
     </LinearLayout>
 
 </RelativeLayout>

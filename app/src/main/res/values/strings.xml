@@ -18,4 +18,7 @@
     <string name="icon_player_lost">&#xe9ed;</string>
     <string name="icon_player_won">&#xe9e1;</string>
 
+    <string name="additional_info_more">&#xea43;</string>
+    <string name="additional_info_less">&#xea41;</string>
+
 </resources>
