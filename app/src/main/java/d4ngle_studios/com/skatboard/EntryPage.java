@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -18,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -135,6 +137,10 @@ public class EntryPage extends ActionBarActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private List<Button> playerButtons;
+        private List<ToggleButton> numberJacksButtons;
+        private List<ToggleButton> valueSuitsButtons;
+        private List<CheckBox> additionalInfoCheckboxes;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -152,48 +158,62 @@ public class EntryPage extends ActionBarActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
 
-            Button buttonPlayer1 = (Button)rootView.findViewById(R.id.imageButtonPlayer1 );
-            Button buttonPlayer2 = (Button)rootView.findViewById(R.id.imageButtonPlayer2 );
-            Button buttonPlayer3 = (Button)rootView.findViewById(R.id.imageButtonPlayer3 );
-            Button buttonPlayer4 = (Button)rootView.findViewById(R.id.imageButtonPlayer4 );
+            Button buttonPlayer1 = (Button) rootView.findViewById(R.id.imageButtonPlayer1);
+            Button buttonPlayer2 = (Button) rootView.findViewById(R.id.imageButtonPlayer2);
+            Button buttonPlayer3 = (Button) rootView.findViewById(R.id.imageButtonPlayer3);
+            Button buttonPlayer4 = (Button) rootView.findViewById(R.id.imageButtonPlayer4);
 
-            ToggleButton buttonNumberJacks1 = (ToggleButton)rootView.findViewById(R.id.numberJacks1 );
-            ToggleButton buttonNumberJacks2 = (ToggleButton)rootView.findViewById(R.id.numberJacks2 );
-            ToggleButton buttonNumberJacks3 = (ToggleButton)rootView.findViewById(R.id.numberJacks3 );
-            ToggleButton buttonNumberJacks4 = (ToggleButton)rootView.findViewById(R.id.numberJacks4 );
+            ToggleButton buttonNumberJacks1 = (ToggleButton) rootView.findViewById(R.id.numberJacks1);
+            ToggleButton buttonNumberJacks2 = (ToggleButton) rootView.findViewById(R.id.numberJacks2);
+            ToggleButton buttonNumberJacks3 = (ToggleButton) rootView.findViewById(R.id.numberJacks3);
+            ToggleButton buttonNumberJacks4 = (ToggleButton) rootView.findViewById(R.id.numberJacks4);
 
-            ToggleButton buttonValueSuitsDiamonds = (ToggleButton)rootView.findViewById(R.id.valueSuitsDiamonds);
-            ToggleButton buttonValueSuitsHearts = (ToggleButton)rootView.findViewById(R.id.valueSuitsHearts);
-            ToggleButton buttonValueSuitsSpades = (ToggleButton)rootView.findViewById(R.id.valueSuitsSpades);
-            ToggleButton buttonValueSuitsClubs = (ToggleButton)rootView.findViewById(R.id.valueSuitsClubs );
+            ToggleButton buttonValueSuitsDiamonds = (ToggleButton) rootView.findViewById(R.id.valueSuitsDiamonds);
+            ToggleButton buttonValueSuitsHearts = (ToggleButton) rootView.findViewById(R.id.valueSuitsHearts);
+            ToggleButton buttonValueSuitsSpades = (ToggleButton) rootView.findViewById(R.id.valueSuitsSpades);
+            ToggleButton buttonValueSuitsClubs = (ToggleButton) rootView.findViewById(R.id.valueSuitsClubs);
 
-            ImageButton buttonValueSuitsGrand = (ImageButton)rootView.findViewById(R.id.valueGrand );
+            ImageButton buttonValueSuitsGrand = (ImageButton) rootView.findViewById(R.id.valueGrand);
 
-            final TextView toggleAdditionalInfoMore = (TextView)rootView.findViewById(R.id.additional_info_more);
-            final TextView toggleAdditionalInfoLess = (TextView)rootView.findViewById(R.id.additional_info_less);
-            final ScrollView additionalGameInfo = (ScrollView)rootView.findViewById(R.id.additionalGameInfoView);
+            CheckBox checkBoxHand = (CheckBox) rootView.findViewById(R.id.checkBoxHand);
+            CheckBox checkBoxOuvert = (CheckBox) rootView.findViewById(R.id.checkBoxOuvert);
+            CheckBox checkBoxSchneider = (CheckBox) rootView.findViewById(R.id.checkBoxSchneider);
+            CheckBox checkBoxSchneiderAngesagt = (CheckBox) rootView.findViewById(R.id.checkBoxSchneiderAngesagt);
+            CheckBox checkBoxSchwarz = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarz);
+            CheckBox checkBoxSchwarzAngesagt = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarzAngesagt);
+
+            final EditText result = (EditText) rootView.findViewById(R.id.editTextPoints);
+            Button buttonCompute = (Button) rootView.findViewById(R.id.buttonCompute);
+
+            final TextView toggleAdditionalInfoMore = (TextView) rootView.findViewById(R.id.additional_info_more);
+            final TextView toggleAdditionalInfoLess = (TextView) rootView.findViewById(R.id.additional_info_less);
+            final ScrollView additionalGameInfo = (ScrollView) rootView.findViewById(R.id.additionalGameInfoView);
             additionalGameInfo.setVisibility(View.GONE);
 
-            buttonPlayer1.setTypeface(font);
-            buttonPlayer2.setTypeface(font);
-            buttonPlayer3.setTypeface(font);
-            buttonPlayer4.setTypeface(font);
+            playerButtons = Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4);
+            numberJacksButtons = Arrays.asList(buttonNumberJacks1, buttonNumberJacks2, buttonNumberJacks3, buttonNumberJacks4);
+            valueSuitsButtons = Arrays.asList(buttonValueSuitsDiamonds, buttonValueSuitsHearts, buttonValueSuitsSpades, buttonValueSuitsClubs);
+            additionalInfoCheckboxes = Arrays.asList(checkBoxHand, checkBoxOuvert, checkBoxSchneider, checkBoxSchneiderAngesagt, checkBoxSchwarz, checkBoxSchwarzAngesagt);
 
-            buttonNumberJacks1.setTypeface(font);
-            buttonNumberJacks2.setTypeface(font);
-            buttonNumberJacks3.setTypeface(font);
-            buttonNumberJacks4.setTypeface(font);
+            for (Button b : playerButtons) {
+                b.setTypeface(font);
+                addPlayerOnClickListeners(b);
+            }
 
-            buttonValueSuitsDiamonds.setTypeface(font);
-            buttonValueSuitsHearts.setTypeface(font);
-            buttonValueSuitsSpades.setTypeface(font);
-            buttonValueSuitsClubs.setTypeface(font);
+            for (ToggleButton b : numberJacksButtons) {
+                b.setTypeface(font);
+                addToggleButtonOnClickListener(b, numberJacksButtons);
+            }
+
+            for (ToggleButton b : valueSuitsButtons) {
+                b.setTypeface(font);
+                addToggleButtonOnClickListener(b, valueSuitsButtons);
+            }
 
             toggleAdditionalInfoMore.setTypeface(font);
             toggleAdditionalInfoMore.setOnClickListener(new View.OnClickListener() {
@@ -213,28 +233,77 @@ public class EntryPage extends ActionBarActivity {
                 }
             });
 
-            addPlayerOnClickListeners(Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4));
+            buttonCompute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    ToggleButton player = getCheckedButton(numberJacksButtons); //TODO
+
+                    int jacksValue = getMathValue(getCheckedButton(numberJacksButtons));
+                    int gameColorValue = getMathValue(getCheckedButton(valueSuitsButtons));
+
+                    if (jacksValue == 0 || gameColorValue == 0) {
+                        Toast.makeText(rootView.getContext(), "ich kann so nicht arbeiten, Idiot!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int modifier = 1 + getAdditionalGameInfo();
+                        result.setText("" + (jacksValue + modifier) * gameColorValue);
+                    }
+                }
+            });
 
             return rootView;
         }
 
-        private void addPlayerOnClickListeners(final List<Button> buttons) {
-            for (final Button b : buttons) {
-                b.setOnClickListener(new View.OnClickListener() {
+        private int getAdditionalGameInfo() {
+            int result = 0;
+            for (CheckBox box : additionalInfoCheckboxes) {
+                if (box.isChecked()) {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        private int getMathValue(ToggleButton button) {
+            if (null == button) {
+                return 0;
+            }
+            switch (button.getId()) {
+                case R.id.numberJacks1:
+                    return 1;
+                case R.id.numberJacks2:
+                    return 2;
+                case R.id.numberJacks3:
+                    return 3;
+                case R.id.numberJacks4:
+                    return 4;
+                case R.id.valueSuitsDiamonds:
+                    return 9;
+                case R.id.valueSuitsHearts:
+                    return 10;
+                case R.id.valueSuitsSpades:
+                    return 11;
+                case R.id.valueSuitsClubs:
+                    return 12;
+                case R.id.valueGrand:
+                    return 24;
+            }
+            return 0;
+        }
+
+        private void addPlayerOnClickListeners(Button button) {
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View clickedButton) {
-                        changePlayerIcons((Button) clickedButton, buttons, getActivity().getString(R.string.icon_player_won));
+                        changePlayerIcons((Button) clickedButton, playerButtons, getActivity().getString(R.string.icon_player_won));
                     }
                 });
-            }
         }
-    }
 
-    private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {
+        private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {
         return true;
     }
 
-    private static void changePlayerIcons(Button clickedButton, List<Button> allButtons, String winString) {
+        private static void changePlayerIcons(Button clickedButton, List<Button> allButtons, String winString) {
 
         if (clickedButton.getText().equals(winString)) {
             clickedButton.setText(R.string.icon_player_lost);
@@ -257,4 +326,27 @@ public class EntryPage extends ActionBarActivity {
         }
     }
 
+        private void addToggleButtonOnClickListener(ToggleButton button, final List<ToggleButton> buttonList) {
+                button.setOnClickListener(new View.OnClickListener() {
+                         @Override
+                         public void onClick(View v) {
+                             for (ToggleButton b : buttonList) {
+                                 if ((b.getId() != (v.getId())) && (b.getTag().equals(v.getTag()))) {
+                                     b.setChecked(false);
+                                 }
+                             }
+                         }
+                     }
+                );
+        }
+
+        private ToggleButton getCheckedButton(List<ToggleButton> buttonList) {
+            for (ToggleButton b : buttonList) {
+                if (b.isChecked()) {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
 }
