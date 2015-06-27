@@ -22,8 +22,9 @@
     </style>
 
     <style name="PlayerButton" parent="EqualButton">
-        <item name="android:text">@string/icon_player</item>
         <item name="android:textSize">@dimen/abc_text_size_display_2_material</item>
+        <item name="android:textOn">@string/icon_player_won</item>
+        <item name="android:textOff">@string/icon_player_lost</item>
     </style>
 
     <style name="GameInfoText" parent="AppTheme">

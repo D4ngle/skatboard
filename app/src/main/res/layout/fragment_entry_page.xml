@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/playersScrollView"
-        android:background="#f44336">
+        android:background="#263238">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -17,25 +17,25 @@
             android:id="@+id/playersLayout" >
 
             <LinearLayout style="@style/EqualLayoutHorizontal">
-                <Button
+                <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer1" />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal">
-                <Button
+                <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer2" />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal">
-                <Button
+                <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer3" />
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal">
-                <Button
+                <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer4" />
             </LinearLayout>
@@ -56,7 +56,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#607d8b">
+            android:background="#37474f">
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <ImageView
@@ -114,7 +114,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#3f51b5">
+            android:background="#455a64">
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
                 <ToggleButton

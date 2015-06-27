@@ -137,7 +137,7 @@ public class EntryPage extends ActionBarActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private List<Button> playerButtons;
+        private List<ToggleButton> playerButtons;
         private List<ToggleButton> numberJacksButtons;
         private List<ToggleButton> valueSuitsButtons;
         private List<CheckBox> additionalInfoCheckboxes;
@@ -163,10 +163,10 @@ public class EntryPage extends ActionBarActivity {
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
 
-            Button buttonPlayer1 = (Button) rootView.findViewById(R.id.imageButtonPlayer1);
-            Button buttonPlayer2 = (Button) rootView.findViewById(R.id.imageButtonPlayer2);
-            Button buttonPlayer3 = (Button) rootView.findViewById(R.id.imageButtonPlayer3);
-            Button buttonPlayer4 = (Button) rootView.findViewById(R.id.imageButtonPlayer4);
+            ToggleButton buttonPlayer1 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer1);
+            ToggleButton buttonPlayer2 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer2);
+            ToggleButton buttonPlayer3 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer3);
+            ToggleButton buttonPlayer4 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer4);
 
             ToggleButton buttonNumberJacks1 = (ToggleButton) rootView.findViewById(R.id.numberJacks1);
             ToggleButton buttonNumberJacks2 = (ToggleButton) rootView.findViewById(R.id.numberJacks2);
@@ -200,9 +200,9 @@ public class EntryPage extends ActionBarActivity {
             valueSuitsButtons = Arrays.asList(buttonValueSuitsDiamonds, buttonValueSuitsHearts, buttonValueSuitsSpades, buttonValueSuitsClubs);
             additionalInfoCheckboxes = Arrays.asList(checkBoxHand, checkBoxOuvert, checkBoxSchneider, checkBoxSchneiderAngesagt, checkBoxSchwarz, checkBoxSchwarzAngesagt);
 
-            for (Button b : playerButtons) {
+            for (ToggleButton b : playerButtons) {
                 b.setTypeface(font);
-                addPlayerOnClickListeners(b);
+                addToggleButtonOnClickListener(b, playerButtons);
             }
 
             for (ToggleButton b : numberJacksButtons) {
@@ -236,8 +236,6 @@ public class EntryPage extends ActionBarActivity {
             buttonCompute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ToggleButton player = getCheckedButton(numberJacksButtons); //TODO
-
                     int jacksValue = getMathValue(getCheckedButton(numberJacksButtons));
                     int gameColorValue = getMathValue(getCheckedButton(valueSuitsButtons));
 
@@ -245,7 +243,11 @@ public class EntryPage extends ActionBarActivity {
                         Toast.makeText(rootView.getContext(), "ich kann so nicht arbeiten, Idiot!", Toast.LENGTH_SHORT).show();
                     } else {
                         int modifier = 1 + getAdditionalGameInfo();
-                        result.setText("" + (jacksValue + modifier) * gameColorValue);
+                        int resultingValue = (jacksValue + modifier) * gameColorValue;
+                        if (gameWasLost()) {
+                            resultingValue = resultingValue * 2;
+                        }
+                        result.setText("" + resultingValue);
                     }
                 }
             });
@@ -261,6 +263,16 @@ public class EntryPage extends ActionBarActivity {
                 }
             }
             return result;
+        }
+
+        private boolean gameWasLost() {
+            int count = 0;
+            for (ToggleButton button : playerButtons) {
+                if (button.isChecked()) {
+                    count++;
+                }
+            }
+            return count != 1;
         }
 
         private int getMathValue(ToggleButton button) {
@@ -290,54 +302,35 @@ public class EntryPage extends ActionBarActivity {
             return 0;
         }
 
-        private void addPlayerOnClickListeners(Button button) {
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View clickedButton) {
-                        changePlayerIcons((Button) clickedButton, playerButtons, getActivity().getString(R.string.icon_player_won));
-                    }
-                });
-        }
-
         private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {
         return true;
-    }
-
-        private static void changePlayerIcons(Button clickedButton, List<Button> allButtons, String winString) {
-
-        if (clickedButton.getText().equals(winString)) {
-            clickedButton.setText(R.string.icon_player_lost);
-            for (Button button : allButtons) {
-                if (isVisiblePlayer((LinearLayout) ((View) clickedButton.getParent()).findViewById(R.id.playersLayout), button)) {
-                    if (!button.equals(clickedButton)) {
-                        button.setText(R.string.icon_player_won);
-                    }
-                }
-            }
-        } else {
-            clickedButton.setText(R.string.icon_player_won);
-            for (Button button : allButtons) {
-                if (isVisiblePlayer((LinearLayout) ((View) clickedButton.getParent()).findViewById(R.id.playersLayout), button)) {
-                    if (!button.equals(clickedButton)) {
-                        button.setText(R.string.icon_player_lost);
-                    }
-                }
-            }
-        }
     }
 
         private void addToggleButtonOnClickListener(ToggleButton button, final List<ToggleButton> buttonList) {
                 button.setOnClickListener(new View.OnClickListener() {
                          @Override
                          public void onClick(View v) {
-                             for (ToggleButton b : buttonList) {
-                                 if ((b.getId() != (v.getId())) && (b.getTag().equals(v.getTag()))) {
-                                     b.setChecked(false);
-                                 }
-                             }
+                             updateButtonGroup(v, buttonList);
                          }
                      }
                 );
+        }
+
+        private void updateButtonGroup(View v, List<ToggleButton> buttonList) {
+            for (ToggleButton b : buttonList) {
+                if (b.getId() != v.getId()) {
+                    if (buttonList.equals(playerButtons)) {
+                        //Player Button was checked before
+                        if (!((ToggleButton)v).isChecked()) {
+                            b.setChecked(true);
+                        } else {
+                            b.setChecked(false);
+                        }
+                    } else {
+                        b.setChecked(false);
+                    }
+                }
+            }
         }
 
         private ToggleButton getCheckedButton(List<ToggleButton> buttonList) {
