@@ -6,7 +6,267 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".EntryPage$PlaceholderFragment">
 
-    <TextView android:id="@+id/section_label" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/horizontalScrollView" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/playersLayout">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonPlayer1"
+                    android:text="@string/icon_player"
+                    android:textSize="@dimen/abc_text_size_display_2_material"
+                    android:tag="btn_player" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonPlayer2"
+                    android:text="@string/icon_player"
+                    android:textSize="@dimen/abc_text_size_display_2_material"
+                    android:tag="btn_player" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonPlayer3"
+                    android:text="@string/icon_player"
+                    android:textSize="@dimen/abc_text_size_display_2_material"
+                    android:tag="btn_player" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonPlayer4"
+                    android:text="@string/icon_player"
+                    android:textSize="@dimen/abc_text_size_display_2_material"
+                    android:tag="btn_player" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/horizontalScrollView">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="M/O"
+                android:id="@+id/textView"
+                android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberJacks1"
+                    android:text="1"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberJacks2"
+                    android:text="2"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberJacks3"
+                    android:text="3"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberJacks4"
+                    android:text="4"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center" >
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/valueSuitsDiamonds"
+                    android:text="@string/icon_diamonds"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center" >
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/valueSuitsHearts"
+                    android:text="@string/icon_hearts"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center" >
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/valueSuitsSpades"
+                    android:text="@string/icon_spades"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center" >
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/valueSuitsClubs"
+                    android:text="@string/icon_clubs"
+                    android:textSize="@dimen/abc_text_size_headline_material" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center" >
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/valueGrand"
+                    android:src="@mipmap/ic_jacks" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_gravity="left|bottom"
+                android:text="Anzahl Punkte" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button"
+                android:layout_gravity="bottom|end" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

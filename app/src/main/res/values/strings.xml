@@ -8,4 +8,14 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="icon_diamonds">&#xe919;</string>
+    <string name="icon_hearts">&#xe9da;</string>
+    <string name="icon_spades">&#xe917;</string>
+    <string name="icon_clubs">&#xe918;</string>
+
+    <string name="icon_player">&#xe9f9;</string>
+    <string name="icon_player_lost">&#xe9ed;</string>
+    <string name="icon_player_won">&#xe9e1;</string>
+
 </resources>
