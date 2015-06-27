@@ -4,4 +4,5 @@
 
     <item android:drawable="@android:color/holo_blue_dark" android:state_checked="true" />
     <item android:drawable="@android:color/transparent" android:state_checked="false"/>
+    <!-- Besser: Teal Gruppe http://www.google.com/design/spec/style/color.html#color-color-palette-->
 </selector>
