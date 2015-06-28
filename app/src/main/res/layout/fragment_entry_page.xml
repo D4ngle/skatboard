@@ -11,7 +11,7 @@
         android:id="@+id/playersScrollView"
         android:background="#d7ccc8">
 
-        <LinearLayout
+        <LinearLayout style="@style/HorizontallyEqualLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/playersLayout" >
@@ -76,14 +76,25 @@
 
     </HorizontalScrollView>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GameArea"
+        android:layout_below="@+id/playersScrollView"
+        android:layout_above="@+id/pointsLayout" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d7ccc8"
+            android:orientation="vertical">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="false"
         android:id="@+id/basicGameInfoView"
-        android:layout_below="@+id/playersScrollView">
+        >
 
         <View style="@style/DividerHorizontal" />
 
@@ -212,7 +223,6 @@
 
     <LinearLayout
         android:id="@+id/toggleAdditionalGameInfoView"
-        android:layout_below="@+id/basicGameInfoView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -224,18 +234,14 @@
             />
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/additionalGameInfoView"
-        android:layout_below="@+id/basicGameInfoView"
-        android:layout_above="@+id/pointsLayout" >
+
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:rowCount="5"
-            android:columnCount="3">
+            android:columnCount="3"
+            android:id="@+id/additionalGameInfoView">
 
             <TextView
                 android:layout_row="0"
@@ -331,6 +337,7 @@
                 android:layout_gravity="center_horizontal"/>
 
         </GridLayout>
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
@@ -341,16 +348,17 @@
         android:id="@+id/pointsLayout">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:id="@+id/editTextPoints"
-            android:text="Anzahl Punkte"
-            android:layout_gravity="start"/>
+            android:hint="Punkte"
+            android:layout_gravity="start"
+            android:focusable="false"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:text="Speichern"
             android:id="@+id/buttonCompute"
             android:layout_gravity="end"/>
     </LinearLayout>

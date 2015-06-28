@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -190,7 +191,7 @@ public class EntryPage extends ActionBarActivity {
 
             final TextView toggleAdditionalInfoMore = (TextView) rootView.findViewById(R.id.additional_info_more);
             final TextView toggleAdditionalInfoLess = (TextView) rootView.findViewById(R.id.additional_info_less);
-            final ScrollView additionalGameInfo = (ScrollView) rootView.findViewById(R.id.additionalGameInfoView);
+            final GridLayout additionalGameInfo = (GridLayout) rootView.findViewById(R.id.additionalGameInfoView);
             //TODO Depending on ScreenSize:
             additionalGameInfo.setVisibility(View.GONE);
 
