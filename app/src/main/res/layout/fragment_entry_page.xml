@@ -2,45 +2,78 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EntryPage$PlaceholderFragment"
-    android:background="#263238"
+    android:background="#d7ccc8"
     android:id="@+id/mainView">
 
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/playersScrollView"
-        android:background="#263238">
+        android:background="#d7ccc8">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/playersLayout" >
 
-            <LinearLayout style="@style/EqualLayoutHorizontal">
+            <LinearLayout style="@style/HorizontallyEqualLayout"
+                android:orientation="vertical">
                 <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="JaBr"
+                    android:id="@+id/textView" />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal">
+            <LinearLayout style="@style/HorizontallyEqualLayout"
+                android:orientation="vertical">
                 <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="DaGl"
+                    android:id="@+id/textView2" />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal">
+            <LinearLayout style="@style/HorizontallyEqualLayout"
+                android:orientation="vertical">
                 <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="MaFi"
+                    android:id="@+id/textView3" />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal">
+            <LinearLayout style="@style/HorizontallyEqualLayout"
+                android:orientation="vertical">
                 <ToggleButton
                     style="@style/PlayerButton"
                     android:id="@+id/imageButtonPlayer4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="TiSc"
+                    android:id="@+id/textView4" />
             </LinearLayout>
 
         </LinearLayout>
+
     </HorizontalScrollView>
 
     <LinearLayout
@@ -52,13 +85,15 @@
         android:id="@+id/basicGameInfoView"
         android:layout_below="@+id/playersScrollView">
 
+        <View style="@style/DividerHorizontal" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#37474f">
+            android:background="#d7ccc8">
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ImageView
                     style="@style/EqualButton"
                     android:padding="0dp"
@@ -68,7 +103,7 @@
                     android:src="@mipmap/ic_number_jacks" />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks1"
@@ -78,7 +113,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks2"
@@ -88,7 +123,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks3"
@@ -98,7 +133,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/numberJacks4"
@@ -114,9 +149,9 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#455a64">
+            android:background="#d7ccc8">
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsDiamonds"
@@ -126,7 +161,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsHearts"
@@ -136,7 +171,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsSpades"
@@ -146,7 +181,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:id="@+id/valueSuitsClubs"
@@ -156,7 +191,7 @@
                     />
             </LinearLayout>
 
-            <LinearLayout style="@style/EqualLayoutHorizontal" >
+            <LinearLayout style="@style/HorizontallyEqualLayout" >
                 <ToggleButton
                     style="@style/EqualButton"
                     android:scaleType="fitXY"
@@ -168,7 +203,10 @@
                     android:id="@+id/valueGrand"
                     android:background="@drawable/layer_list" />
             </LinearLayout>
+
         </LinearLayout>
+
+        <View style="@style/DividerHorizontal" />
 
     </LinearLayout>
 
