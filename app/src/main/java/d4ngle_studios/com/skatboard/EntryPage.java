@@ -18,12 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -186,12 +185,13 @@ public class EntryPage extends ActionBarActivity {
             CheckBox checkBoxSchwarz = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarz);
             CheckBox checkBoxSchwarzAngesagt = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarzAngesagt);
 
-            final EditText result = (EditText) rootView.findViewById(R.id.editTextPoints);
+            final EditText resultTextfield = (EditText) rootView.findViewById(R.id.editTextPoints);
             Button buttonCompute = (Button) rootView.findViewById(R.id.buttonCompute);
 
             final TextView toggleAdditionalInfoMore = (TextView) rootView.findViewById(R.id.additional_info_more);
             final TextView toggleAdditionalInfoLess = (TextView) rootView.findViewById(R.id.additional_info_less);
             final ScrollView additionalGameInfo = (ScrollView) rootView.findViewById(R.id.additionalGameInfoView);
+            //TODO Depending on ScreenSize:
             additionalGameInfo.setVisibility(View.GONE);
 
             playerButtons = Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4);
@@ -201,17 +201,21 @@ public class EntryPage extends ActionBarActivity {
 
             for (ToggleButton b : playerButtons) {
                 b.setTypeface(font);
-                addToggleButtonOnClickListener(b, playerButtons);
+                addToggleButtonOnClickListener(b, playerButtons, resultTextfield);
             }
 
             for (ToggleButton b : numberJacksButtons) {
                 b.setTypeface(font);
-                addToggleButtonOnClickListener(b, numberJacksButtons);
+                addToggleButtonOnClickListener(b, numberJacksButtons, resultTextfield);
             }
 
             for (ToggleButton b : valueSuitsButtons) {
                 b.setTypeface(font);
-                addToggleButtonOnClickListener(b, valueSuitsButtons);
+                addToggleButtonOnClickListener(b, valueSuitsButtons, resultTextfield);
+            }
+
+            for (CheckBox c : additionalInfoCheckboxes) {
+                addCheckboxOnClickListener(c, resultTextfield);
             }
 
             toggleAdditionalInfoMore.setTypeface(font);
@@ -235,23 +239,35 @@ public class EntryPage extends ActionBarActivity {
             buttonCompute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int jacksValue = getMathValue(getCheckedButton(numberJacksButtons));
-                    int gameColorValue = getMathValue(getCheckedButton(valueSuitsButtons));
-
-                    if (jacksValue == 0 || gameColorValue == 0) {
-                        Toast.makeText(rootView.getContext(), "ich kann so nicht arbeiten, Idiot!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        int modifier = 1 + getAdditionalGameInfo();
-                        int resultingValue = (jacksValue + modifier) * gameColorValue;
-                        if (gameWasLost()) {
-                            resultingValue = resultingValue * 2;
-                        }
-                        result.setText("" + resultingValue);
-                    }
+                    updateGameValue(resultTextfield);
                 }
             });
 
             return rootView;
+        }
+
+        private void addCheckboxOnClickListener(CheckBox c, final EditText resultTextfield) {
+            c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    updateGameValue(resultTextfield);
+                }
+            });
+        }
+
+        private void updateGameValue(EditText resultTextfield) {
+            int happyPlayers = getHappyPlayers();
+            int jacksValue = getMathValue(getCheckedButton(numberJacksButtons));
+            int gameColorValue = getMathValue(getCheckedButton(valueSuitsButtons));
+
+            if (jacksValue != 0 && gameColorValue != 0) {
+                int modifier = 1 + getAdditionalGameInfo();
+                int result = (jacksValue + modifier) * gameColorValue;
+                if (happyPlayers > 1) {
+                    result = result * 2;
+                }
+                resultTextfield.setText("" + result);
+            }
         }
 
         private int getAdditionalGameInfo() {
@@ -264,14 +280,14 @@ public class EntryPage extends ActionBarActivity {
             return result;
         }
 
-        private boolean gameWasLost() {
+        private int getHappyPlayers() {
             int count = 0;
             for (ToggleButton button : playerButtons) {
                 if (button.isChecked()) {
                     count++;
                 }
             }
-            return count != 1;
+            return count;
         }
 
         private int getMathValue(ToggleButton button) {
@@ -305,11 +321,12 @@ public class EntryPage extends ActionBarActivity {
         return true;
     }
 
-        private void addToggleButtonOnClickListener(ToggleButton button, final List<ToggleButton> buttonList) {
+        private void addToggleButtonOnClickListener(ToggleButton button, final List<ToggleButton> buttonList, final EditText resultTextfield) {
                 button.setOnClickListener(new View.OnClickListener() {
                          @Override
                          public void onClick(View v) {
                              updateButtonGroup(v, buttonList);
+                             updateGameValue(resultTextfield);
                          }
                      }
                 );
