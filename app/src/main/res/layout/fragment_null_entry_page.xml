@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EntryPage$PlaceholderFragment"
+    android:background="@color/material_red_900"
+    android:id="@+id/mainView">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/playerPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/player_section_height"
+        />
+
+    <!-- 77 = 45 + 2x 16-->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GameArea"
+        android:layout_below="@+id/playerPager"
+        android:layout_above="@+id/pointsLayout" >
+
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/pointsLayout">
+
+        <EditText
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextPoints"
+            android:hint="Punkte"
+            android:layout_gravity="start"
+            android:focusable="false"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speichern"
+            android:id="@+id/buttonCompute"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+</RelativeLayout>
