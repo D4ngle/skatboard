@@ -19,7 +19,7 @@
     <string name="icon_player_lost">&#xe9ed;</string>
     <string name="icon_player_won">&#xe9e1;</string>
 
-    <string name="additional_info_more">&#x2795;</string>
+    <string name="additional_info_more">Ansagen &#x2795;</string>
     <string name="additional_info_less">&#x2796;</string>
 
     <string name="item">Player %d</string>

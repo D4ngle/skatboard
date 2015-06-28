@@ -3,5 +3,6 @@
 
     <item name="material_red_800" type="color">#c62828</item>
     <item name="material_red_900" type="color">#b71c1c</item>
+    <item name="color_match_red" type="color">#690000</item>
 
 </resources>
