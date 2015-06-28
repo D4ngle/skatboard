@@ -1,11 +1,17 @@
 package d4ngle_studios.com.skatboard;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,12 +23,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -143,6 +149,8 @@ public class EntryPage extends AppCompatActivity {
 
         @Bind(R.id.additional_info_more)
         TextView toggleAdditionalInfoMore;
+        @Bind(R.id.additional_info_less)
+        TextView toggleAdditionalInfoLess;
         @Bind(R.id.additionalGameInfoView)
         GridLayout additionalGameInfo;
 
@@ -157,6 +165,7 @@ public class EntryPage extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private ViewPager pager = null;
         private View rootView;
+        private HashMap<Integer, ToggleButton> playerPositions = new HashMap<>();
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -180,11 +189,12 @@ public class EntryPage extends AppCompatActivity {
         private class SampleAdapter extends PagerAdapter {
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                View page = getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
+                final View page = getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
 
                 ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
                 final TextView playerButtonText = (TextView) page.findViewById(R.id.playerToggleButtonText);
                 Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
+                playerButton.setText(R.string.icon_player);
                 playerButton.setTypeface(font);
 
                 final String msg = String.format(getString(R.string.item), position + 1);
@@ -195,11 +205,9 @@ public class EntryPage extends AppCompatActivity {
                     public void onClick(View v) {
                         updateButtonGroup(v);
                         updateGameValue();
-                        playerButtonText.bringToFront();
-                        System.out.println("HALLO: " + msg);
                     }
                 });
-
+                playerPositions.put(position, playerButton);
                 container.addView(page);
 
                 return (page);
@@ -255,16 +263,34 @@ public class EntryPage extends AppCompatActivity {
             });
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @OnClick({R.id.additional_info_less})
         public void hideAdditionalInfo() {
-            additionalGameInfo.setVisibility(View.GONE);
-            toggleAdditionalInfoMore.setVisibility(View.VISIBLE);
+            int cx = (toggleAdditionalInfoLess.getLeft() + toggleAdditionalInfoLess.getRight()) / 2;
+            int cy = (toggleAdditionalInfoLess.getTop() + toggleAdditionalInfoLess.getBottom()) / 2;
+            int initialRadius = additionalGameInfo.getWidth();
+            Animator anim = ViewAnimationUtils.createCircularReveal(additionalGameInfo, cx, cy, initialRadius, 0);
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    additionalGameInfo.setVisibility(View.GONE);
+                    toggleAdditionalInfoMore.setVisibility(View.VISIBLE);
+                }
+            });
+            anim.start();
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @OnClick({R.id.additional_info_more})
         public void showAdditionalInfo() {
-            additionalGameInfo.setVisibility(View.VISIBLE);
             toggleAdditionalInfoMore.setVisibility(View.GONE);
+            int cx = (toggleAdditionalInfoMore.getLeft() + toggleAdditionalInfoMore.getRight()) / 2;
+            int cy = (toggleAdditionalInfoMore.getTop() + toggleAdditionalInfoMore.getBottom()) / 2;
+            int finalRadius = Math.max(additionalGameInfo.getWidth(), additionalGameInfo.getHeight());
+            Animator anim = ViewAnimationUtils.createCircularReveal(additionalGameInfo, cx, cy, 0, finalRadius);
+            additionalGameInfo.setVisibility(View.VISIBLE);
+            anim.start();
         }
 
         @OnClick({R.id.numberJacks1, R.id.numberJacks2, R.id.numberJacks3, R.id.numberJacks4,
@@ -310,6 +336,12 @@ public class EntryPage extends AppCompatActivity {
             return count;
         }
 
+        private boolean buttonIsVisible(ToggleButton button) {
+            int leftItemIndex = playerPager.getCurrentItem();
+            List<ToggleButton> list = Arrays.asList(playerPositions.get(leftItemIndex), playerPositions.get(leftItemIndex+1), playerPositions.get(leftItemIndex+2));
+            return list.contains(button);
+        }
+
         private int getMathValue(ToggleButton button) {
             if (null == button) {
                 return 0;
@@ -337,20 +369,21 @@ public class EntryPage extends AppCompatActivity {
             return 0;
         }
 
-        private static boolean isVisiblePlayer(LinearLayout playersLayout, View view) {
-            return true;
-        }
-
-        private void updateButtonGroup(View v) {
-            ArrayList<ToggleButton> buttonList = getToggleButtonsByTag((ViewGroup) rootView, (String) v.getTag());
+        private void updateButtonGroup(View clickedButton) {
+            ArrayList<ToggleButton> buttonList = getToggleButtonsByTag((ViewGroup) rootView, (String) clickedButton.getTag());
             for (ToggleButton b : buttonList) {
-                if (!b.equals(v)) {
-                    if (v.getTag().equals("player")) {
-                        //Player Button was checked before
-                        if (!((ToggleButton) v).isChecked()) {
-                            b.setChecked(true);
+                if (!b.equals(clickedButton)) {
+                    if (clickedButton.getTag().equals("player")) {
+                        if (buttonIsVisible(b)) {
+                            //Player Button was checked before
+                            if (!((ToggleButton) clickedButton).isChecked()) {
+                                b.setChecked(true);
+                            } else {
+                                b.setChecked(false);
+                            }
                         } else {
                             b.setChecked(false);
+                            b.setText(R.string.icon_player);
                         }
                     } else {
                         b.setChecked(false);
