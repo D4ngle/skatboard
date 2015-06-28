@@ -192,7 +192,7 @@ public class EntryPage extends ActionBarActivity {
             final TextView toggleAdditionalInfoMore = (TextView) rootView.findViewById(R.id.additional_info_more);
             final TextView toggleAdditionalInfoLess = (TextView) rootView.findViewById(R.id.additional_info_less);
             final GridLayout additionalGameInfo = (GridLayout) rootView.findViewById(R.id.additionalGameInfoView);
-            //TODO Depending on ScreenSize:
+            //TODO Depending on ScreenSize: !
             additionalGameInfo.setVisibility(View.GONE);
 
             playerButtons = Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4);
