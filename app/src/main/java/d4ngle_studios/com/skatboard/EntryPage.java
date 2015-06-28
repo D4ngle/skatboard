@@ -1,10 +1,12 @@
 package d4ngle_studios.com.skatboard;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import android.graphics.Typeface;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,7 +24,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -137,10 +138,11 @@ public class EntryPage extends ActionBarActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private List<ToggleButton> playerButtons;
+        private List<ToggleButton> playerButtons = new ArrayList<>();
         private List<ToggleButton> numberJacksButtons;
         private List<ToggleButton> valueSuitsButtons;
         private List<CheckBox> additionalInfoCheckboxes;
+        private ViewPager pager = null;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -157,16 +159,72 @@ public class EntryPage extends ActionBarActivity {
         public PlaceholderFragment() {
         }
 
+        /*
+         * Inspired by
+         * https://gist.github.com/8cbe094bb7a783e37ad1
+         */
+        private class SampleAdapter extends PagerAdapter {
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                View page= getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
+
+                ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
+                Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
+                playerButton.setTypeface(font);
+//                addToggleButtonOnClickListener(playerButton, playerButtons, resultTextfield);
+
+                playerButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        updateButtonGroup(v);
+                                                    }
+                                                });
+
+                        playerButtons.add(playerButton);
+                TextView tv=(TextView)page.findViewById(R.id.text);
+
+                final String msg= String.format(getString(R.string.item), position + 1);
+
+                tv.setText(msg);
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("HALLO: " + msg);
+                    }
+                });
+
+                container.addView(page);
+
+                return(page);
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position,
+                                    Object object) {
+                container.removeView((View)object);
+            }
+
+            @Override
+            public int getCount() {
+                return(4);
+            }
+
+            @Override
+            public float getPageWidth(int position) {
+                return(0.33f);
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return(view == object);
+            }
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
-
-            ToggleButton buttonPlayer1 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer1);
-            ToggleButton buttonPlayer2 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer2);
-            ToggleButton buttonPlayer3 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer3);
-            ToggleButton buttonPlayer4 = (ToggleButton) rootView.findViewById(R.id.imageButtonPlayer4);
 
             ToggleButton buttonNumberJacks1 = (ToggleButton) rootView.findViewById(R.id.numberJacks1);
             ToggleButton buttonNumberJacks2 = (ToggleButton) rootView.findViewById(R.id.numberJacks2);
@@ -195,24 +253,22 @@ public class EntryPage extends ActionBarActivity {
             //TODO Depending on ScreenSize: !
             additionalGameInfo.setVisibility(View.GONE);
 
-            playerButtons = Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4);
+            pager=(ViewPager)rootView.findViewById(R.id.playerPager);
+            pager.setAdapter(new SampleAdapter());
+            pager.setOffscreenPageLimit(9);
+
             numberJacksButtons = Arrays.asList(buttonNumberJacks1, buttonNumberJacks2, buttonNumberJacks3, buttonNumberJacks4);
             valueSuitsButtons = Arrays.asList(buttonValueSuitsDiamonds, buttonValueSuitsHearts, buttonValueSuitsSpades, buttonValueSuitsClubs, buttonValueSuitsGrand);
             additionalInfoCheckboxes = Arrays.asList(checkBoxHand, checkBoxOuvert, checkBoxSchneider, checkBoxSchneiderAngesagt, checkBoxSchwarz, checkBoxSchwarzAngesagt);
 
-            for (ToggleButton b : playerButtons) {
-                b.setTypeface(font);
-                addToggleButtonOnClickListener(b, playerButtons, resultTextfield);
-            }
-
             for (ToggleButton b : numberJacksButtons) {
                 b.setTypeface(font);
-                addToggleButtonOnClickListener(b, numberJacksButtons, resultTextfield);
+                addToggleButtonOnClickListener(b, resultTextfield);
             }
 
             for (ToggleButton b : valueSuitsButtons) {
                 b.setTypeface(font);
-                addToggleButtonOnClickListener(b, valueSuitsButtons, resultTextfield);
+                addToggleButtonOnClickListener(b, resultTextfield);
             }
 
             for (CheckBox c : additionalInfoCheckboxes) {
@@ -322,21 +378,22 @@ public class EntryPage extends ActionBarActivity {
         return true;
     }
 
-        private void addToggleButtonOnClickListener(ToggleButton button, final List<ToggleButton> buttonList, final EditText resultTextfield) {
+        private void addToggleButtonOnClickListener(ToggleButton button, final EditText resultTextfield) {
                 button.setOnClickListener(new View.OnClickListener() {
                          @Override
                          public void onClick(View v) {
-                             updateButtonGroup(v, buttonList);
+                             updateButtonGroup(v);
                              updateGameValue(resultTextfield);
                          }
                      }
                 );
         }
 
-        private void updateButtonGroup(View v, List<ToggleButton> buttonList) {
+        private void updateButtonGroup(View v) {
+            ArrayList<ToggleButton> buttonList = getToggleButtonsByTag((ViewGroup) v.getRootView(), (String) v.getTag());
             for (ToggleButton b : buttonList) {
                 if (b.getId() != v.getId()) {
-                    if (buttonList.equals(playerButtons)) {
+                    if (v.getTag().equals("player")) {
                         //Player Button was checked before
                         if (!((ToggleButton)v).isChecked()) {
                             b.setChecked(true);
@@ -348,6 +405,25 @@ public class EntryPage extends ActionBarActivity {
                     }
                 }
             }
+        }
+
+        // from http://stackoverflow.com/a/16262479/3727256
+        private static ArrayList<ToggleButton> getToggleButtonsByTag(ViewGroup root, String tag){
+            ArrayList<ToggleButton> views = new ArrayList<>();
+            final int childCount = root.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                final View child = root.getChildAt(i);
+                if (child instanceof ViewGroup) {
+                    views.addAll(getToggleButtonsByTag((ViewGroup) child, tag));
+                }
+                final Object tagObj = child.getTag();
+                if (tagObj != null && tagObj.equals(tag)) {
+                    if (child instanceof ToggleButton) {
+                        views.add((ToggleButton)child);
+                    }
+                }
+            }
+            return views;
         }
 
         private ToggleButton getCheckedButton(List<ToggleButton> buttonList) {

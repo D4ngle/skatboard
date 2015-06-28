@@ -5,82 +5,16 @@
     android:background="#d7ccc8"
     android:id="@+id/mainView">
 
-    <HorizontalScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/playersScrollView"
-        android:background="#d7ccc8">
-
-        <LinearLayout style="@style/HorizontallyEqualLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/playersLayout" >
-
-            <LinearLayout style="@style/HorizontallyEqualLayout"
-                android:orientation="vertical">
-                <ToggleButton
-                    style="@style/PlayerButton"
-                    android:id="@+id/imageButtonPlayer1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="JaBr"
-                    android:id="@+id/textView" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/HorizontallyEqualLayout"
-                android:orientation="vertical">
-                <ToggleButton
-                    style="@style/PlayerButton"
-                    android:id="@+id/imageButtonPlayer2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="DaGl"
-                    android:id="@+id/textView2" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/HorizontallyEqualLayout"
-                android:orientation="vertical">
-                <ToggleButton
-                    style="@style/PlayerButton"
-                    android:id="@+id/imageButtonPlayer3" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="MaFi"
-                    android:id="@+id/textView3" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/HorizontallyEqualLayout"
-                android:orientation="vertical">
-                <ToggleButton
-                    style="@style/PlayerButton"
-                    android:id="@+id/imageButtonPlayer4" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="TiSc"
-                    android:id="@+id/textView4" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/playerPager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/GameArea"
-        android:layout_below="@+id/playersScrollView"
+        android:layout_below="@+id/playerPager"
         android:layout_above="@+id/pointsLayout" >
 
         <LinearLayout
@@ -212,6 +146,7 @@
                     android:textOn=""
                     android:textOff=""
                     android:id="@+id/valueGrand"
+                    android:tag="gameValueButton"
                     android:background="@drawable/layer_list" />
             </LinearLayout>
 

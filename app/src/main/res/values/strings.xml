@@ -21,4 +21,6 @@
     <string name="additional_info_more">&#xea43;</string>
     <string name="additional_info_less">&#xea41;</string>
 
+    <string name="item">Player %d</string>
+
 </resources>
