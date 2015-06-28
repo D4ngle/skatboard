@@ -138,7 +138,6 @@ public class EntryPage extends ActionBarActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private List<ToggleButton> playerButtons = new ArrayList<>();
         private List<ToggleButton> numberJacksButtons;
         private List<ToggleButton> valueSuitsButtons;
         private List<CheckBox> additionalInfoCheckboxes;
@@ -171,7 +170,6 @@ public class EntryPage extends ActionBarActivity {
                 ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
                 Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
                 playerButton.setTypeface(font);
-//                addToggleButtonOnClickListener(playerButton, playerButtons, resultTextfield);
 
                 playerButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override
@@ -180,7 +178,6 @@ public class EntryPage extends ActionBarActivity {
                                                     }
                                                 });
 
-                        playerButtons.add(playerButton);
                 TextView tv=(TextView)page.findViewById(R.id.text);
 
                 final String msg= String.format(getString(R.string.item), position + 1);
@@ -313,7 +310,7 @@ public class EntryPage extends ActionBarActivity {
         }
 
         private void updateGameValue(EditText resultTextfield) {
-            int happyPlayers = getHappyPlayers();
+            int happyPlayers = getHappyPlayers(resultTextfield, "player");
             int jacksValue = getMathValue(getCheckedButton(numberJacksButtons));
             int gameColorValue = getMathValue(getCheckedButton(valueSuitsButtons));
 
@@ -337,9 +334,9 @@ public class EntryPage extends ActionBarActivity {
             return result;
         }
 
-        private int getHappyPlayers() {
+        private int getHappyPlayers(EditText resultTextfield, String player) {
             int count = 0;
-            for (ToggleButton button : playerButtons) {
+            for (ToggleButton button : getToggleButtonsByTag((ViewGroup)resultTextfield.getRootView(), player)) {
                 if (button.isChecked()) {
                     count++;
                 }
@@ -392,7 +389,7 @@ public class EntryPage extends ActionBarActivity {
         private void updateButtonGroup(View v) {
             ArrayList<ToggleButton> buttonList = getToggleButtonsByTag((ViewGroup) v.getRootView(), (String) v.getTag());
             for (ToggleButton b : buttonList) {
-                if (b.getId() != v.getId()) {
+                if (!b.equals(v)) {
                     if (v.getTag().equals("player")) {
                         //Player Button was checked before
                         if (!((ToggleButton)v).isChecked()) {
