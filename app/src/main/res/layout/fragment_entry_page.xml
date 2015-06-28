@@ -157,14 +157,16 @@
             </LinearLayout>
 
             <LinearLayout style="@style/EqualLayoutHorizontal" >
-                <ImageButton
+                <ToggleButton
                     style="@style/EqualButton"
                     android:scaleType="fitXY"
                     android:padding="0dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:textOn=""
+                    android:textOff=""
                     android:id="@+id/valueGrand"
-                    android:src="@mipmap/ic_jacks" />
+                    android:background="@drawable/layer_list" />
             </LinearLayout>
         </LinearLayout>
 

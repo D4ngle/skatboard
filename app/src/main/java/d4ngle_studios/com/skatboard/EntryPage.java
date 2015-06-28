@@ -177,8 +177,7 @@ public class EntryPage extends ActionBarActivity {
             ToggleButton buttonValueSuitsHearts = (ToggleButton) rootView.findViewById(R.id.valueSuitsHearts);
             ToggleButton buttonValueSuitsSpades = (ToggleButton) rootView.findViewById(R.id.valueSuitsSpades);
             ToggleButton buttonValueSuitsClubs = (ToggleButton) rootView.findViewById(R.id.valueSuitsClubs);
-
-            ImageButton buttonValueSuitsGrand = (ImageButton) rootView.findViewById(R.id.valueGrand);
+            ToggleButton buttonValueSuitsGrand = (ToggleButton) rootView.findViewById(R.id.valueGrand);
 
             CheckBox checkBoxHand = (CheckBox) rootView.findViewById(R.id.checkBoxHand);
             CheckBox checkBoxOuvert = (CheckBox) rootView.findViewById(R.id.checkBoxOuvert);
@@ -197,7 +196,7 @@ public class EntryPage extends ActionBarActivity {
 
             playerButtons = Arrays.asList(buttonPlayer1, buttonPlayer2, buttonPlayer3, buttonPlayer4);
             numberJacksButtons = Arrays.asList(buttonNumberJacks1, buttonNumberJacks2, buttonNumberJacks3, buttonNumberJacks4);
-            valueSuitsButtons = Arrays.asList(buttonValueSuitsDiamonds, buttonValueSuitsHearts, buttonValueSuitsSpades, buttonValueSuitsClubs);
+            valueSuitsButtons = Arrays.asList(buttonValueSuitsDiamonds, buttonValueSuitsHearts, buttonValueSuitsSpades, buttonValueSuitsClubs, buttonValueSuitsGrand);
             additionalInfoCheckboxes = Arrays.asList(checkBoxHand, checkBoxOuvert, checkBoxSchneider, checkBoxSchneiderAngesagt, checkBoxSchwarz, checkBoxSchwarzAngesagt);
 
             for (ToggleButton b : playerButtons) {
