@@ -10,4 +10,4 @@ http://www.flaticon.com/
 https://github.com/Pixplicity/MultiViewPager
 
 #License
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0
