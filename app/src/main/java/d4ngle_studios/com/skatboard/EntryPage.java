@@ -7,12 +7,13 @@ import java.util.Locale;
 
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,10 +28,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+
 /**
  * This is the Entry Page
  */
-public class EntryPage extends ActionBarActivity {
+public class EntryPage extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -133,6 +138,32 @@ public class EntryPage extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        @Bind(R.id.playerPager) ViewPager playerPager;
+
+        @Bind(R.id.numberJacks1) ToggleButton buttonNumberJacks1;
+        @Bind(R.id.numberJacks2) ToggleButton buttonNumberJacks2;
+        @Bind(R.id.numberJacks3) ToggleButton buttonNumberJacks3;
+        @Bind(R.id.numberJacks4) ToggleButton buttonNumberJacks4;
+
+        @Bind(R.id.valueSuitsDiamonds) ToggleButton buttonValueSuitsDiamonds;
+        @Bind(R.id.valueSuitsHearts) ToggleButton buttonValueSuitsHearts;
+        @Bind(R.id.valueSuitsSpades) ToggleButton buttonValueSuitsSpades;
+        @Bind(R.id.valueSuitsClubs) ToggleButton buttonValueSuitsClubs;
+        @Bind(R.id.valueGrand) ToggleButton buttonValueSuitsGrand;
+
+        @Bind(R.id.checkBoxHand) CheckBox checkBoxHand;
+        @Bind(R.id.checkBoxOuvert) CheckBox checkBoxOuvert;
+        @Bind(R.id.checkBoxSchneider) CheckBox checkBoxSchneider;
+        @Bind(R.id.checkBoxSchneiderAngesagt) CheckBox checkBoxSchneiderAngesagt;
+        @Bind(R.id.checkBoxSchwarz) CheckBox checkBoxSchwarz;
+        @Bind(R.id.checkBoxSchwarzAngesagt) CheckBox checkBoxSchwarzAngesagt;
+
+        @Bind(R.id.additional_info_more) TextView toggleAdditionalInfoMore;
+        @Bind(R.id.additional_info_less) TextView toggleAdditionalInfoLess;
+        @Bind(R.id.additionalGameInfoView) GridLayout additionalGameInfo;
+
+        @Bind(R.id.editTextPoints) EditText resultTextfield;
+        @Bind(R.id.buttonCompute) Button buttonCompute;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -219,38 +250,21 @@ public class EntryPage extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_entry_page, container, false);
+            ButterKnife.bind(this, rootView);
+            return rootView;
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
 
-            ToggleButton buttonNumberJacks1 = (ToggleButton) rootView.findViewById(R.id.numberJacks1);
-            ToggleButton buttonNumberJacks2 = (ToggleButton) rootView.findViewById(R.id.numberJacks2);
-            ToggleButton buttonNumberJacks3 = (ToggleButton) rootView.findViewById(R.id.numberJacks3);
-            ToggleButton buttonNumberJacks4 = (ToggleButton) rootView.findViewById(R.id.numberJacks4);
-
-            ToggleButton buttonValueSuitsDiamonds = (ToggleButton) rootView.findViewById(R.id.valueSuitsDiamonds);
-            ToggleButton buttonValueSuitsHearts = (ToggleButton) rootView.findViewById(R.id.valueSuitsHearts);
-            ToggleButton buttonValueSuitsSpades = (ToggleButton) rootView.findViewById(R.id.valueSuitsSpades);
-            ToggleButton buttonValueSuitsClubs = (ToggleButton) rootView.findViewById(R.id.valueSuitsClubs);
-            ToggleButton buttonValueSuitsGrand = (ToggleButton) rootView.findViewById(R.id.valueGrand);
-
-            CheckBox checkBoxHand = (CheckBox) rootView.findViewById(R.id.checkBoxHand);
-            CheckBox checkBoxOuvert = (CheckBox) rootView.findViewById(R.id.checkBoxOuvert);
-            CheckBox checkBoxSchneider = (CheckBox) rootView.findViewById(R.id.checkBoxSchneider);
-            CheckBox checkBoxSchneiderAngesagt = (CheckBox) rootView.findViewById(R.id.checkBoxSchneiderAngesagt);
-            CheckBox checkBoxSchwarz = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarz);
-            CheckBox checkBoxSchwarzAngesagt = (CheckBox) rootView.findViewById(R.id.checkBoxSchwarzAngesagt);
-
-            final EditText resultTextfield = (EditText) rootView.findViewById(R.id.editTextPoints);
-            Button buttonCompute = (Button) rootView.findViewById(R.id.buttonCompute);
-
-            final TextView toggleAdditionalInfoMore = (TextView) rootView.findViewById(R.id.additional_info_more);
-            final TextView toggleAdditionalInfoLess = (TextView) rootView.findViewById(R.id.additional_info_less);
-            final GridLayout additionalGameInfo = (GridLayout) rootView.findViewById(R.id.additionalGameInfoView);
             //TODO Depending on ScreenSize: !
             additionalGameInfo.setVisibility(View.GONE);
 
-            pager=(ViewPager)rootView.findViewById(R.id.playerPager);
+            pager = playerPager;
             pager.setAdapter(new SampleAdapter());
             pager.setOffscreenPageLimit(9);
 
@@ -296,8 +310,6 @@ public class EntryPage extends ActionBarActivity {
                     updateGameValue(resultTextfield);
                 }
             });
-
-            return rootView;
         }
 
         private void addCheckboxOnClickListener(CheckBox c, final EditText resultTextfield) {
