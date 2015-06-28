@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="material_red_800" type="color">#c62828</item>
+    <item name="material_red_900" type="color">#b71c1c</item>
+
+</resources>

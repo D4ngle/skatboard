@@ -14,14 +14,14 @@
     </style>
 
     <style name="EqualButton" parent="AppTheme">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:layout_width">50sp</item>
+        <item name="android:layout_height">50sp</item>
+        <!--<item name="android:padding">16dp</item>-->
         <item name="android:background">@drawable/toggle_check</item>
     </style>
 
     <style name="PlayerButton" parent="EqualButton">
-        <item name="android:textSize">@dimen/abc_text_size_display_2_material</item>
+        <item name="android:textSize">@dimen/player_icon_size</item>
         <item name="android:textOn">@string/icon_player_won</item>
         <item name="android:textOff">@string/icon_player_lost</item>
         <item name="android:tag">player</item>
@@ -39,6 +39,7 @@
     </style>
 
     <style name="DividerHorizontal">
+        <item name="android:layout_margin">2dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>

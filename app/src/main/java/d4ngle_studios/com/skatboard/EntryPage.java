@@ -183,25 +183,19 @@ public class EntryPage extends AppCompatActivity {
                 View page = getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
 
                 ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
+                final TextView playerButtonText = (TextView) page.findViewById(R.id.playerToggleButtonText);
                 Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
                 playerButton.setTypeface(font);
+
+                final String msg = String.format(getString(R.string.item), position + 1);
+                playerButtonText.setText(msg);
 
                 playerButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateButtonGroup(v);
                         updateGameValue();
-                    }
-                });
-
-                TextView tv = (TextView) page.findViewById(R.id.text);
-
-                final String msg = String.format(getString(R.string.item), position + 1);
-
-                tv.setText(msg);
-                tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        playerButtonText.bringToFront();
                         System.out.println("HALLO: " + msg);
                     }
                 });
@@ -274,7 +268,7 @@ public class EntryPage extends AppCompatActivity {
         }
 
         @OnClick({R.id.numberJacks1, R.id.numberJacks2, R.id.numberJacks3, R.id.numberJacks4,
-                R.id.valueSuitsDiamonds, R.id.valueSuitsHearts, R.id.valueSuitsSpades, R.id.valueSuitsClubs})
+                R.id.valueSuitsDiamonds, R.id.valueSuitsHearts, R.id.valueSuitsSpades, R.id.valueSuitsClubs, R.id.valueGrand})
         public void updateView(View v) {
             updateButtonGroup(v);
             updateGameValue();
