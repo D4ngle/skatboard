@@ -6,7 +6,6 @@
 
     <ToggleButton
         style="@style/PlayerButton"
-        android:layout_gravity="center"
         android:id="@+id/playerToggleButton" />
 
     <TextView
