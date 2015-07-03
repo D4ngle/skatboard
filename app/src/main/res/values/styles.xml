@@ -26,6 +26,7 @@
         <item name="android:textOff">@string/icon_player_lost</item>
         <item name="android:tag">player</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="GameInfoText" parent="AppTheme">

@@ -20,6 +20,8 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class RegularEntryFragment extends Fragment{
+public class RegularEntryFragment extends Fragment {
     @Bind(R.id.playerPager)
     ViewPager playerPager;
 
@@ -45,18 +47,12 @@ public class RegularEntryFragment extends Fragment{
     EditText resultTextfield;
     @Bind(R.id.buttonCompute)
     Button buttonCompute;
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
+
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View rootView;
-    private HashMap<Integer, ToggleButton> playerPositions = new HashMap<>();
+    HashMap<Integer, ToggleButton> positionsMap = new HashMap<>();
+    HashMap<String, ArrayList<ToggleButton>> allPlayerButtons = new HashMap<>();
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static RegularEntryFragment newInstance(int sectionNumber) {
         RegularEntryFragment fragment = new RegularEntryFragment();
         Bundle args = new Bundle();
@@ -66,58 +62,6 @@ public class RegularEntryFragment extends Fragment{
     }
 
     public RegularEntryFragment() {
-    }
-
-    /*
-     * Inspired by
-     * https://gist.github.com/8cbe094bb7a783e37ad1
-     */
-    private class SampleAdapter extends PagerAdapter {
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            final View page = getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
-
-            ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
-            final TextView playerButtonText = (TextView) page.findViewById(R.id.playerToggleButtonText);
-            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf");
-            playerButton.setText(R.string.icon_player);
-            playerButton.setTypeface(font);
-
-            final String msg = String.format(getString(R.string.item), position + 1);
-            playerButtonText.setText(msg);
-
-            playerButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updateButtonGroup(v);
-                    updateGameValue();
-                }
-            });
-            playerPositions.put(position, playerButton);
-            container.addView(page);
-
-            return (page);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public int getCount() {
-            return (4);
-        }
-
-        @Override
-        public float getPageWidth(int position) {
-            return (0.33f);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return (view == object);
-        }
     }
 
     @Override
@@ -131,10 +75,10 @@ public class RegularEntryFragment extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO Depending on ScreenSize: !
         additionalGameInfo.setVisibility(View.GONE);
 
-        playerPager.setAdapter(new SampleAdapter());
+        PagerAdapter wrappedAdapter = new InfinitePagerAdapter(new SampleAdapter());
+        playerPager.setAdapter(wrappedAdapter);
         playerPager.setOffscreenPageLimit(9);
 
         buttonCompute.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +122,7 @@ public class RegularEntryFragment extends Fragment{
     @OnClick({R.id.numberJacks1, R.id.numberJacks2, R.id.numberJacks3, R.id.numberJacks4,
             R.id.valueSuitsDiamonds, R.id.valueSuitsHearts, R.id.valueSuitsSpades, R.id.valueSuitsClubs, R.id.valueGrand})
     public void updateView(View v) {
-        updateButtonGroup(v);
+        uncheckButtonGroup(v);
         updateGameValue();
     }
 
@@ -209,8 +153,9 @@ public class RegularEntryFragment extends Fragment{
     }
 
     private int getHappyPlayers() {
+
         int count = 0;
-        for (ToggleButton button : getToggleButtonsByTag((ViewGroup) rootView, "player")) {
+        for (ToggleButton button : getVisiblePlayers()) {
             if (button.isChecked()) {
                 count++;
             }
@@ -218,10 +163,18 @@ public class RegularEntryFragment extends Fragment{
         return count;
     }
 
-    private boolean buttonIsVisible(ToggleButton button) {
+    private List<ToggleButton> getVisiblePlayers() {
+
         int leftItemIndex = playerPager.getCurrentItem();
-        List<ToggleButton> list = Arrays.asList(playerPositions.get(leftItemIndex), playerPositions.get(leftItemIndex + 1), playerPositions.get(leftItemIndex + 2));
-        return list.contains(button);
+        int middleItemIndex = getIndex(leftItemIndex + 1);
+        int rightItemIndex = getIndex(leftItemIndex + 2);
+
+        return Arrays.asList(positionsMap.get(leftItemIndex), positionsMap.get(middleItemIndex), positionsMap.get(rightItemIndex));
+    }
+
+    private int getIndex(int i) {
+        int max = positionsMap.size();
+        return i < max ? i : i - max;
     }
 
     private int getMathValue(ToggleButton button) {
@@ -251,26 +204,30 @@ public class RegularEntryFragment extends Fragment{
         return 0;
     }
 
-    private void updateButtonGroup(View clickedButton) {
+    private void uncheckButtonGroup(View clickedButton) {
         ArrayList<ToggleButton> buttonList = getToggleButtonsByTag((ViewGroup) rootView, (String) clickedButton.getTag());
         for (ToggleButton b : buttonList) {
             if (!b.equals(clickedButton)) {
-                if (clickedButton.getTag().equals("player")) {
-                    if (buttonIsVisible(b)) {
-                        //Player Button was checked before
-                        if (!((ToggleButton) clickedButton).isChecked()) {
-                            b.setChecked(true);
-                        } else {
-                            b.setChecked(false);
-                        }
-                    } else {
-                        b.setChecked(false);
-                        b.setText(R.string.icon_player);
-                    }
-                } else {
-                    b.setChecked(false);
-                }
+                b.setChecked(false);
             }
+        }
+    }
+
+    private void updateOtherPlayerButtonsCheckState(String tag, boolean isChecked) {
+        for (ToggleButton button : allPlayerButtons.get(tag)) {
+            button.setChecked(isChecked);
+        }
+    }
+
+    private void updateActivePlayerButtonBackground(String tag) {
+        for (ToggleButton b : allPlayerButtons.get(tag)) {
+            b.setBackgroundResource(R.drawable.checked_circle_button);
+        }
+    }
+
+    private void updateInactivePlayerButtonBackground(String tag) {
+        for (ToggleButton b : allPlayerButtons.get(tag)) {
+            b.setBackgroundResource(R.drawable.inactive_circle_button);
         }
     }
 
@@ -322,4 +279,88 @@ public class RegularEntryFragment extends Fragment{
         }
         return null;
     }
+
+    //    Inspired by https://gist.github.com/8cbe094bb7a783e37ad1
+    private class SampleAdapter extends PagerAdapter {
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            final View page = getActivity().getLayoutInflater().inflate(R.layout.page, container, false);
+
+            ToggleButton playerButton = (ToggleButton) page.findViewById(R.id.playerToggleButton);
+            TextView playerButtonText = (TextView) page.findViewById(R.id.playerToggleButtonText);
+
+            playerButton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "font/icomoon.ttf"));
+            playerButton.setTag("" + (String) playerButton.getTag() + position);
+            playerButtonText.setText(String.format(getString(R.string.item), position));
+
+            ArrayList<ToggleButton> existingButtons = allPlayerButtons.get((String) playerButton.getTag());
+            ArrayList<ToggleButton> temp = new ArrayList<>();
+            temp.add(playerButton);
+            if (null != existingButtons) {
+                playerButton.setText(existingButtons.get(0).getText());
+                playerButton.setBackground(existingButtons.get(0).getBackground());
+                if (existingButtons.get(0).isChecked()) {
+                    playerButton.setChecked(true);
+                }
+                temp.addAll(existingButtons);
+            } else {
+                playerButton.setText(R.string.icon_player);
+            }
+
+            allPlayerButtons.put((String) playerButton.getTag(), temp);
+            positionsMap.put(position, playerButton);
+
+            playerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateOtherPlayerButtonsCheckState((String) v.getTag(), ((ToggleButton) v).isChecked());
+
+                    for (String s : allPlayerButtons.keySet()) {
+                        if (!s.equals(v.getTag())) {
+                            updateOtherPlayerButtonsCheckState(s, !((ToggleButton) v).isChecked());
+                        }
+                    }
+
+                    updateActivePlayerButtonBackground((String) v.getTag());
+
+                    for (String s : allPlayerButtons.keySet()) {
+                        if (!s.equals(v.getTag())) {
+                            updateInactivePlayerButtonBackground(s);
+                        }
+                    }
+
+                    //TODO Update Not visible Players - set to neutral text
+
+                    updateGameValue();
+                }
+            });
+
+            container.addView(page);
+
+            return (page);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getCount() {
+            return (4);
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            return (0.33f);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return (view == object);
+        }
+    }
+
 }
